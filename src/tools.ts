@@ -1,0 +1,15 @@
+import {erklaerInput,faktenInput,textbausteinInput,type Schema} from './schema';
+const text:Schema={type:'string'};const arr:Schema={type:'array'};
+const obj=(properties:Record<string,Schema>,required=Object.keys(properties)):Schema=>({type:'object',properties,required});
+const quelle=obj({titel:text,url:text,herausgeber:text,datum:text,live_geprueft_am:text});
+const quellenListe:Schema={type:'array',items:quelle};
+export const erklaerOutput=obj({stufe:text,label:text,bedeutung:text,moegliche_gruende:arr,hinweise_zu_ihren_angaben:arr,checkliste:arr,nicht_belegt:arr,quellen:quellenListe,stand:text,fakten_live_geprueft_am:text,disclaimer:text,scope:text});
+export const faktenOutput=obj({fakten:arr,nicht_belegt:arr,quellen:quellenListe,stand:text,fakten_live_geprueft_am:text,hinweis:text,disclaimer:text,scope:text});
+export const textbausteinOutput=obj({bausteine:arr,hinweis:text,stand:text,disclaimer:text,scope:text});
+const annotations=(title:string)=>({title,readOnlyHint:true,destructiveHint:false,idempotentHint:true,openWorldHint:false});
+const grenze='Unabhängiges Tool, kein offizielles mobile.de-Produkt, kein Algorithmus-Nachbau, keine eigene Marktpreis-Zahl, keine Rechts- oder Preisberatung. Das Tool ruft keine Website und keine mobile.de-API ab, scrapt nichts und speichert nichts. Nur Betriebsmetriken (Tool, Erfolg, Dauer) werden geloggt.';
+export const tools=[
+ {name:'erklaere_preisbewertung',title:'Preisbewertung erklären',description:`Nutzen, wenn ein Autohaus wissen will, warum ein Inserat bei mobile.de z. B. „Erhöhter Preis“, „Hoher Preis“ oder keine Bewertung zeigt. Eingabe: stufe (sehr_guter_preis, guter_preis, fairer_preis, erhoehter_preis, hoher_preis, ohne_bewertung), optional ausstattung_vollstaendig_angegeben, garantie_im_feld_angegeben, haendlerleistungen_im_text, fahrzeug_selten_oder_alt (true/false). Liefert auf Deutsch Bedeutung, belegte mögliche Gründe, Hinweise zu den Angaben, Checkliste, nicht belegte Punkte, Quellen und Stand-Datum. ${grenze}`,inputSchema:erklaerInput,outputSchema:erklaerOutput,annotations:annotations('Preisbewertung erklären')},
+ {name:'get_preisbewertung_fakten',title:'Fakten zur Preisbewertung',description:`Nutzen, wenn nach datierten Fakten zur mobile.de-Preisbewertung gefragt wird: Einführung 2017, Stufen, Mindest-Vergleichsmenge 2018, KI-Umstellung zum 30.06.2025, wöchentliche Aktualisierung, bekannte Grenzen. Keine Eingaben nötig. Jeder Fakt mit Datum und Quellen-URL. ${grenze}`,inputSchema:faktenInput,outputSchema:faktenOutput,annotations:annotations('Fakten zur Preisbewertung')},
+ {name:'get_textbausteine_haendlerleistung',title:'Textbausteine Händlerleistung',description:`Nutzen, wenn ein Autohaus Händlerleistungen im Inserat sichtbar machen will (Garantie, Inzahlungnahme, geprüfte Fahrzeuge, Aufbereitung, Finanzierung). Optional leistungen als Liste. Liefert kurze deutsche Textvorschläge mit Platzhaltern. Vorschläge, keine Garantie für eine bessere Preisbewertung. ${grenze}`,inputSchema:textbausteinInput,outputSchema:textbausteinOutput,annotations:annotations('Textbausteine Händlerleistung')}
+];

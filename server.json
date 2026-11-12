@@ -1,0 +1,14 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "de.autohaus-video/preisbewertung-erklaerer",
+  "title": "Preisbewertungs-Erklärer",
+  "description": "Erklärt Autohäusern die mobile.de-Preisbewertung: datierte Fakten, Checkliste, Quellen.",
+  "version": "0.1.0",
+  "websiteUrl": "https://autohaus-video.de",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://preisbewertung-mcp.autohaus-video.de/mcp"
+    }
+  ]
+}
