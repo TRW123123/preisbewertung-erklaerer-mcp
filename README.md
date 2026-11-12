@@ -12,6 +12,8 @@ Remote-MCP-Server für Autohäuser im DACH-Raum: erklärt, was die Preisbewertun
 
 ## Status
 
+**Öffentliche Preview (kostenlos, Netlify Function, gleicher Code):** `https://preisbewertung-erklaerer-mcp.netlify.app/mcp` – am 12.11.2026 per curl geprüft (health, initialize, tools/list, tools/call positiv und negativ, GET 405, OPTIONS 204). Adapter: `netlify/functions/mcp.ts`. Manueller Deploy, nicht mit GitHub verknüpft.
+
 Version 0.1.0, gebaut und getestet am 12.11.2026, lokal mit `wrangler dev` geprüft. **Noch kein Production-Deploy**: die URL `https://preisbewertung-mcp.autohaus-video.de/mcp` in `server.json` ist ein Vorschlag und erst nach Cloudflare-Login und Safaks OK erreichbar.
 
 ## Tools
